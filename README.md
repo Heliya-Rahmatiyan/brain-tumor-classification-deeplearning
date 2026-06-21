@@ -4,6 +4,42 @@ An end-to-end, structured Deep Learning repository utilizing **ResNet18** to cla
 
 ---
 
+## Dataset Overview & Clinical Context
+
+This project utilizes the **Sartaj Brain Tumor MRI Dataset**, a widely used open-source benchmark for brain tumor classification tasks.
+
+### Dataset Characteristics
+* **Imaging Modality**: Magnetic Resonance Imaging (MRI)
+* **Image Type**: 2D axial brain MRI slices
+* **Total Images**: 3,264
+* **Classification Task**: Multi-class tumor classification (4 classes)
+
+### Class Distribution
+| Clinical Class | Number of Images |
+| :--- | :---: |
+| **Glioma Tumor** | 926 |
+| **Meningioma Tumor** | 937 |
+| **Pituitary Tumor** | 901 |
+| **No Tumor** | 500 |
+| **Total** | **3,264** |
+
+### Clinical Categories
+* **Glioma Tumor**: Tumors originating from glial cells within the central nervous system.
+* **Meningioma Tumor**: Tumors arising from the meninges surrounding the brain and spinal cord.
+* **Pituitary Tumor**: Tumors located in the pituitary gland at the base of the brain.
+* **No Tumor**: Healthy control MRI scans used for baseline comparison.
+
+### Dataset Challenges
+The dataset presents several real-world machine learning challenges:
+1. Moderate class imbalance, particularly in the `no_tumor` category.
+2. Significant visual similarity between certain tumor subtypes.
+3. Limited dataset size compared to large-scale natural image benchmarks.
+4. Domain shift between ImageNet pretraining and medical imaging data.
+
+*These challenges motivated the extensive transfer learning, fine-tuning, ensemble learning, and explainability experiments documented throughout this repository.*
+
+---
+
 ## Project Architecture (Step-by-Step Pipeline)
 
 The repository is organized into 10 sequential, production-grade notebooks tracking the entire R&D lifecycle:
@@ -69,3 +105,14 @@ To cross the trust barrier in clinical software, **Step 9** deploys Gradient-wei
 **Clinical Logic Routing:**
 * **Tumor Predicted**: The pipeline overlays dynamic heatmaps precisely targeting the detected pathology zones to guide the radiologist and ensure clinical accountability.
 * **No Tumor Predicted**: The system triggers a clinical gate that completely suppresses the visualization layer, rendering a clean, distraction-free scan to prevent cognitive overload during negative findings (both True Negatives and False Negatives).
+
+---
+
+## ⚠️ Limitations & Clinical Disclaimer
+
+While the proposed pipeline and ensemble system achieved strong performance on the evaluation set, several critical boundaries must be acknowledged:
+
+1. **Single Cohort Evaluation**: Evaluation was strictly performed on a single public dataset; no external validation cohorts from different clinical centers or MRI scanners were available to test cross-site generalization.
+2. **2D Dimensionality**: The MRI scans were processed as independent 2D axial slices rather than continuous 3D volumetric studies, which limits the spatial contextual awareness of the network.
+3. **Data Scale**: The dataset volume remains relatively small compared to massive natural image benchmarks, leaving room for further optimization via larger multi-institutional data.
+4. **No Clinical Readiness Implied**: Performance metrics and visual heatmaps should not be interpreted as evidence of true clinical validation or readiness. 
